@@ -1,12 +1,16 @@
 {
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx ts-node src/index.ts",
     "watch": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node build/index.js"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
   }
 }
