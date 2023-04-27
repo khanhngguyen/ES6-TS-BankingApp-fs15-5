@@ -14,28 +14,54 @@ class Bank {
         //each branch should be added only once
         if (!this.#branches.includes(newBranch)) {
             this.#branches.push(newBranch);
+            //console.log(`new branch ${newBranch.getName} was added successfully`);
             return true;
         }
+        //console.log(`can not add new branch with name ${newBranch.getName}, brand already exists`);
         return false;
     }
 
     addCustomer(branch: Branch, customer: Customer): boolean {
         //each customer should be added only once to a branch
         //branch should exist in Bank, if not, add branch then add Customer
-        //--> addBranch should be true
-        if (this.addBranch(branch)) {
-            return branch.addCustomer(customer);
+        //--> checkBranch should be true
+        if (this.checkBranch(branch)) {
+            //console.log(`customer ${customer.getName} was added to existed branch ${branch.getName} successfully`);
+            branch.addCustomer(customer);
+            return true;
+        } else {
+            //branch does not exist --> add branch then add Customer
+            if (this.addBranch(branch)) {
+                //console.log(`customer ${customer.getName} was added to new created branch ${branch.getName} successfully`);
+                branch.addCustomer(customer);
+                return true;
+            }
+            console.log("can not add customer to branch");
+            return false;
         }
-        return false;
     }
 
     addCustomerTransaction(branch: Branch, id: string, amount: number): boolean {
         //returns true if the customers transaction is added successfully
         //branch should exist in Bank
-        if (this.addBranch(branch)) {
-            return branch.addCustomerTransaction(id, amount);
+        //customer should exist in branch
+        const branchExist = this.checkBranch(branch);
+        const customerExist = branch.findCustomer(id);
+
+        if (branchExist && customerExist) {
+            console.log(`add customer transaction successfully to existed branch: ${branch.getName}`);
+            branch.addCustomerTransaction(id, amount);
+            return true;
+        } else {
+            //branch does not exist --> add branch, then check if customer is in branch
+            // if (this.addBranch(branch) && branch.findCustomer(id) != null) {
+            //     console.log(`add customer transaction successfully to new added branch: ${branch.getName}`);
+            //     branch.addCustomerTransaction(id, amount);
+            //     return true;
+            // }
+            console.log("can not add customer transaction");
+            return false;
         }
-        return false;
     }
 
     findBranchName(name: string): Branch[] | null {
@@ -43,8 +69,12 @@ class Bank {
         let branchInSearch = new Branch(name);
         if (this.#branches.includes(branchInSearch)) {
             result.push(branchInSearch);
+            console.log(`branch found: ${result}`);
             return result;
-        } else return null;
+        } else {
+            console.log("can not find branch");
+            return null;
+        }
     }
 
     checkBranch(branch: Branch): boolean {
@@ -56,7 +86,7 @@ class Bank {
         //prints out a list of customers inside the branch, and with transaction details
         if (this.checkBranch(branchName)) {
             //inside each Branch
-            console.log(`Branch: ${branchName}`);
+            console.log(`Branch: ${branchName.getName}`);
             //prints out each customer
             branchName.getCustomers.map(customer => {
                 console.log(`Customer: ${customer.getName}`);
@@ -67,6 +97,7 @@ class Bank {
             })
             return true;
         }
+        console.log("can not find transaction");
         return false;
     }
 }

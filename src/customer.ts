@@ -29,6 +29,7 @@ class Customer {
         const transactions = this.#transactions;
         const balance = transactions.reduce((total: number, transaction: Transaction) => {
             total += transaction.amount;
+            //console.log(`total balance: ${total}`);
             return total;
         }, 0)
         return balance;
@@ -36,15 +37,18 @@ class Customer {
 
     //return conditional boolean
     addTransaction(input: number): boolean {
-        //balance can't be negative
-        if (this.getBalance()) {
+        //transaction can't bemade if balance is not enough
+        let balance = this.getBalance();
+        if ((balance + input) > 0) {
             let newTransaction = {
                 amount: input,
                 date: new Date()
             }
             this.#transactions.push(newTransaction);
+            console.log("new transaction added");
             return true;
         } else {
+            console.log("balance is not enough to add transaction");
             return false;
         }
     }
