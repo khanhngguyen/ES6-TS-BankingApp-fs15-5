@@ -103,3 +103,6 @@ You can add more codes to check the functionality and secrity of your banking sy
 ## Installation
 1. After clone the project from your forked repo, run `npm install`
 2. Run `npm run watch` to see code running in watch mode, or check `package.json` for extra scripts
+
+## Result
+![result picture](result.png)

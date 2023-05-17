@@ -14,8 +14,8 @@ arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 arizonaBank.addBranch(westBranch);
 
-// arizonaBank.findBranchName("bank");
-// arizonaBank.findBranchName("sun");
+arizonaBank.findBranchName("bank");
+arizonaBank.findBranchName("sun");
 
 arizonaBank.addCustomer(westBranch, customer1);
 arizonaBank.addCustomer(westBranch, customer3);
